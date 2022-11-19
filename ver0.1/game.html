@@ -1,0 +1,238 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>The BlackRoom</title>
+<style type="text/css">
+*{margin: 0;padding: 0;}
+.wrap{
+	margin: 20px auto;
+	width: 603px;
+	height: 800px;
+	border:1px solid #FFFFFF;
+	position: relative;
+}
+.btn{
+	margin-right: 150px;
+	margin-top: 30px;
+	width: 130px;
+	height: 25px;
+	background-color: #000000;
+	font-size: 15px;
+	text-align: center;
+	color: #FFFFFF;
+	border:1px solid #FFFFFF;
+	cursor: pointer;
+}
+.bag{
+	float: right;
+	margin-right: 60px;
+}
+.textland{
+	width: 603px;
+	height: 170px;
+	position: absolute;
+	border:1px solid #FFFFFF;
+	left: 0;
+	top: 630px;
+	background: #000000;
+}
+.fei{
+	text-align: right;
+	font-size: 13px;
+}
+textarea{
+	width: 603px;
+	height: 170px;
+	background-color: #000000;
+	color: #FFFFFF;
+}
+body,td,th {
+    color: #FFFFFF;
+}
+body {
+    background-color: #000000;
+}
+label{
+	width: 150px;
+	height: 30px;
+	float: left;
+	text-align: center;
+	line-height:30px;
+	border-right: 1px solid #FFFFFF;
+	border-bottom: 1px solid #FFFFFF;
+}
+label:nth-of-type(4){
+	border-right: none;
+}
+label span{
+	cursor: pointer;
+}
+label div{
+	width: 603px;
+	height: 600px;
+	position: absolute;
+	left: 0;
+	top: 31px;
+	background: #000000;
+	display: none;
+}
+label input{
+	width: 0;
+}
+input:checked+div{
+	display: block;
+}
+</style>
+</head>
+
+<body>
+<button name="exit" onClick="stop()" style="float: right;background-color: #000000;color: #FFFFFF">exit</button><button name="start" onClick="start()" style="float: left;background-color: #000000;color: #FFFFFF">start</button>
+<div class="wrap">
+    <label>       
+		<span>小黑屋</span>
+        <input type="radio" name="tab" checked>
+        <div>
+			<table class="bag" border="0">
+				<tr>
+					<th>.</th>
+					<th>.</th>
+				</tr>
+				<tr>
+					<td>木头</td>
+					<td><output id="wood"></output></td>
+				</tr>
+				<tr>
+					<td>肉</td>
+					<td>10</td>
+				</tr>
+				<tr>
+					<td>皮毛</td>
+					<td>10</td>
+				</tr>
+			</table>
+			<font class="fei">&nbsp;1木头&nbsp;</font>
+		  	<button class="btn" onClick="wood_fire()">火堆</button>
+			<br/><font class="fei" id="chechewood">20木头</font>
+			<button id="cheche" onClick="buy_che()" class="btn">小推车</button>
+		</div>
+    </label>
+    <label>
+        <span>屋外</span>
+        <input type="radio" name="tab">
+        <div>
+			<table class="bag" border="0">
+				<tr>
+					<th>.</th>
+					<th>.</th>
+				</tr>
+				<tr id="chechebag" style="display: none">
+					<td>推车</td>
+					<td>1</td>
+				</tr>
+				<tr>
+					<td>陷阱</td>
+					<td>10</td>
+				</tr>
+			</table>
+			<button class="btn" onclick="wood_jia()">收集木头</button>
+			<input class="btn" type="button" name="xianjing" value="查看陷阱" />
+			
+		</div>
+    </label>
+    <label>
+        <span>古代飞船</span>
+        <input type="radio" name="tab">
+        <div>news-page</div>
+    </label>
+    <label>
+        <span>外出</span>
+        <input type="radio" name="tab">
+        <div>mine-page</div>
+    </label>
+	<div class="textland"><textarea name="words" id="words" readonly></textarea></div>
+</div>
+<script type="text/javascript">
+var level=0;
+var warm=0;
+var wood=0;var x_wood=1;
+var cheche=false;
+var w;
+var fire_word="熊熊燃烧着的 火堆";//火堆触发剧情
+var warm_word=["寒冷的 小屋",//小屋温度剧情
+			   "有了温度的 小屋",
+			   "温度刚好的 小屋",
+			   "温暖的 小屋",
+			   "热的 小屋"]
+var words=["风雨交加的 夜晚",//起始剧情
+		   "漆黑的 小屋",
+		   "一个陌生人跌跌撞撞冲进了小屋",
+		   "陌生人浑身湿透蜷缩在地上 瑟瑟发抖并满口不知所云",
+		   "陌生人不再发抖 神色逐渐缓和",
+		   "陌生人神志逐渐清醒 开始打量四周",
+		   "陌生人表示自己是工匠 能够制造一些简单的东西",
+		   "工匠希望能够定居下来 她可以帮忙做一些力所能及的事",
+		   "工匠制作了一个小推车 这样可以收集更多的木头"]
+var trap_word="更多的陷阱可以捕捉更多的猎物";//制作陷阱触发
+var wood_collect="枯枝败叶把庭园弄得一团糟";//收集木头触发
+var trap_collect=["陷阱里发现了猎物、破碎的牙齿",//陷阱普通事件
+				  "陷阱里发现了猎物、破碎的牙齿和少量的鳞片",
+				  "陷阱里发现了猎物、破碎的牙齿，少量的鳞片和奇怪的护身符"]
+function textgb(){//文本置低
+	var gb=document.getElementById("words");
+	gb.scrollTop=gb.scrollHeight;
+}
+function wood_jian(jian){//木头消耗
+	if(wood>jian){
+		wood-=jian;
+		document.getElementById("wood").innerHTML=wood;
+	}else{
+		document.getElementById("words").value+="\n木头不够了"
+		textgb();
+	}
+}
+function wood_jia(){//收集木头
+	if(cheche){
+		wood+=30;
+	}else{
+		wood+=10;
+	}
+	document.getElementById("wood").innerHTML=wood;
+	document.getElementById("words").value+='\n'+wood_collect;
+	textgb();
+}
+function wood_fire(){//烧火
+	if(wood>1){
+		wood-=1;
+		document.getElementById("wood").innerHTML=wood;
+		document.getElementById("words").value+='\n'+fire_word;
+		textgb();
+	}else{
+		document.getElementById("words").value+="\n木头不够了"
+		textgb();
+	}
+}
+function buy_che(){//买车
+	wood_jian(30);
+	cheche=true;
+	document.getElementById("chechebag").style.display='block';
+	document.getElementById("cheche").style.display='none';
+	document.getElementById("chechewood").style.display='none';
+	document.getElementById("words").value+='\n'+words[8];
+	textgb();
+}
+function start(){
+	w=new Worker('dome.js');
+	w.onmessage = function (event) {
+  	var x=event.data;
+    wood=wood+x*x_wood;
+    document.getElementById("wood").innerHTML=wood;
+    };
+}
+function stop(){
+	w.terminate();
+	w=undefined;
+}
+</script>
+</body>
+</html>
