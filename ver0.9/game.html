@@ -213,11 +213,15 @@ input:checked+div{
           </p>
           <p class="none" id="cart_bt">
           <font class="fei">&nbsp;30木头&nbsp;</font>
-          <button class="btn" onclick="cart()">小推车</button><br />
+          <button class="btn" onclick="cart()">小推车</button>
           </p>
           <p class="none" id="trap_bt">
           <font class="fei" id="trap_ft">&nbsp;90木头&nbsp;</font>
           <button class="btn" onclick="trap()">陷阱</button><br />
+          </p>
+          <p class="none" id="cabin_bt">
+            <font class="fei" id="cabin_ft">&nbsp;100木头&nbsp;</font>
+            <button class="btn" onclick="cabin()">木屋</button><br />
           </p>
 		</div>
     </label>
@@ -436,13 +440,14 @@ function trap(){
     wordout("木头不够了");
   }else {
     if (cid[1][2]==0){
+    display("cabin_bt",true);
     display("trap_ji",true);
     }
     cid[0][0]-=90+20*cid[1][2];
     cid[1][2]+=1;
     if(cid[1][2]>9){
-      wordout("更多的陷阱已经无法带来更多的收益了");
-      display("trap_bt",false);
+    wordout("更多的陷阱已经无法带来更多的收益了");
+    display("trap_bt",false);
     }else {wordout(trap_word);}
     updata("trap_ft",90+20*cid[1][2]+"木头&nbsp;")
     updata("trap",cid[1][2]);
@@ -493,6 +498,27 @@ function trap_ji(){
   lodingdisplay();
   display_cd("trap_ji",20);
 }//采集陷阱
+function cabin(){
+  if(cid[0][0]<100+30*cid[1][1]){
+    wordout("木头不够了");
+  }else{
+    if (cid[1][1]==0){
+      display_tr("tr_cabin",true);
+    }
+    cid[0][0]-=100+30*cid[1][1];
+    cid[1][1]+=1;
+    if (cid[1][1]>29){
+      wordout("剩下的空间不足以建造更多的木屋了");
+      display("cabin_bt",false);
+    }else {
+      wordout("工匠建起了一座小屋 他说这件事很快就会传出去");
+    }
+    updata("cabin_ft",100+30*cid[1][1]+"木头&nbsp;")
+    updata("cabin",cid[1][1]);
+    updata("wood",cid[0][0])
+  }
+}//购买木屋
+
 startgame();
 </script>
 </body>
