@@ -91,7 +91,7 @@ input:checked+div{
 
 <body>
 <div class="wrap">
-    <label>       
+    <label>
 		<span>小黑屋</span>
         <input type="radio" name="tab" checked>
         <div>
@@ -222,6 +222,10 @@ input:checked+div{
           <p class="none" id="cabin_bt">
             <font class="fei" id="cabin_ft">&nbsp;100木头&nbsp;</font>
             <button class="btn" onclick="cabin()">木屋</button><br />
+          </p>
+          <p class="none" id="huinter_cabin_bt">
+            <font class="fei" id="huinter_cabin_ft">&nbsp;100木头&nbsp;</font>
+            <button class="btn" onclick="cabin()">猎人小屋</button><br />
           </p>
 		</div>
     </label>
@@ -518,6 +522,9 @@ function cabin(){
     updata("wood",cid[0][0])
   }
 }//购买木屋
+function huinter_cabin(){
+
+}//购买猎人小屋（
 
 startgame();
 </script>
