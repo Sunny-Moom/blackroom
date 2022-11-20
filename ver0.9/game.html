@@ -235,14 +235,54 @@ input:checked+div{
                   <td>小推车</td>
                   <td><output id="cart"></output></td>
                 </tr>
+                <tr id="tr_cabin" style="display: none">
+                  <td>木屋</td>
+                  <td><output id="cabin"></output></td>
+                </tr>
                 <tr id="tr_trap" style="display: none">
                   <td>陷阱</td>
                   <td><output id="trap"></output></td>
                 </tr>
+                <tr id="tr_huinter_cabin" style="display: none">
+                  <td>猎人小屋</td>
+                  <td><output id="huinter_cabin"></output></td>
+                </tr>
+                <tr id="tr_meat_factory" style="display: none">
+                  <td>制肉厂</td>
+                  <td><output id="meat_factory"></output></td>
+                </tr>
+                <tr id="tr_leather_factory" style="display: none">
+                  <td>皮革厂</td>
+                  <td><output id="leather_factory"></output></td>
+                </tr>
+                <tr id="tr_iron_mine" style="display: none">
+                  <td>铁矿</td>
+                  <td><output id="iron_mine"></output></td>
+                </tr>
+                <tr id="tr_coal_mine" style="display: none">
+                  <td>煤矿</td>
+                  <td><output id="coal_mine"></output></td>
+                </tr>
+                <tr id="tr_sulfur_mine" style="display: none">
+                  <td>硫磺矿</td>
+                  <td><output id="sulfur_mine"></output></td>
+                </tr>
+                <tr id="tr_steel_factory" style="display: none">
+                  <td>炼钢炉</td>
+                  <td><output id="steel_factory"></output></td>
+                </tr>
+                <tr id="tr_trade" style="display: none">
+                  <td>贸易栈</td>
+                  <td><output id="trade"></output></td>
+                </tr>
+                <tr id="tr_ordnance_factory" style="display: none">
+                  <td>兵工厂</td>
+                  <td><output id="ordnance_factory"></output></td>
+                </tr>
               </tbody>
 			</table>
-			<button class="btn" id="wood_ji" onclick="wood_ji()">收集木头</button>
-			<button class="btn" id="trap_ji">查看陷阱</button>
+			<button class="btn" style="display: none" id="wood_ji" onclick="wood_ji()">收集木头</button>
+			<button class="btn" style="display: none" id="trap_ji">查看陷阱</button>
 		</div>
     </label>
     <label>
@@ -259,6 +299,12 @@ input:checked+div{
 </div>
 <script type="text/javascript">
 var cid = [[],[],[],[]];
+var cname=[
+        ["wood","meat","bait","coat","tooth","scale","amulet","bacon","leather","iron","coal","sulfur","steel","medicine","alien_alloy"],
+        ["cart","cabin","trap","huinter_cabin","meat_factory","leather_factory","iron_mine","coal_mine","sulfur_mine","steel_factory","trade","ordnance_factory"],
+        ["compass","lance","iron_sword","steel_sword","shputgun","bullet","laser_gun","battery","dagger","decoy_bomb","frag"],
+        ["leather_armour","iron_armour","steel_armour","knapsack","water_bag","iron_box","kettle","wagon","water_box"]
+];
 var fire_word="熊熊燃烧着的 火堆";//火堆触发剧情
 var warm_word=["寒冷的 小屋",
 			   "有了温度的 小屋",
@@ -279,9 +325,28 @@ var wood_collect="枯枝败叶把庭园弄得一团糟";//收集木头触发
 var trap_collect=["陷阱里发现了猎物、破碎的牙齿",
 				  "陷阱里发现了猎物、破碎的牙齿和少量的鳞片",
 				  "陷阱里发现了猎物、破碎的牙齿，少量的鳞片和奇怪的护身符"];//陷阱普通事件
+loding();
 var warm=-1;
 var level=0;
 cid[0][0]=5;
+function loding(){
+  for(let x=0;x<=4;x++){
+    for(let y=0;y<=14;y++){
+      cid[x][y]=0;
+    }
+  }
+}//数据初始化
+function lodingdisplay(){
+  for(let x=0;x<=2;x++){
+    for(let y=0;y<=14;y++){
+      if(cname[x][y]!=undefined){
+        if (cid[x][y]!=0){
+          display_tr("tr_"+cname[x][y],true);
+        }
+      }
+    }
+  }
+}//物品显示刷新
 function updata(a,b){
   document.getElementById(a).innerHTML=b;
 }//a为组件id，b为物品数量
@@ -291,8 +356,12 @@ function textgb(){
     }//文本置低
 function display(a,b){
   if(b==true) document.getElementById(a).style.display='inline';
-	else document.getElementById(a).style.display='none';
+  else document.getElementById(a).style.display='none';
 }//组件是否显示，a为组件id，b为布尔值
+function display_tr(a,b){
+  if(b==true) document.getElementById(a).style.display='block';
+	else document.getElementById(a).style.display='none';
+}//组件是否显示，a为组件id，b为布尔值(物品栏专用)
 function display_bt(a,b){
   display(a,false);
   setTimeout("display('"+a+"',true)",b*1000);
@@ -351,9 +420,9 @@ function cart(){
   if(cid[0][0]<30){wordout("木头不够了");}else {
     cid[0][0]-=30;
     display("cart_bt",false);
-    display("tr_cart",true);
+    display_tr("tr_cart",true);
     display("trap_bt",true);
-    display("tr_trap",true);
+    display_tr("tr_trap",true);
     cid[1][2]=0;
     cid[1][0]=1;
     wordout(words[8]);
@@ -385,6 +454,9 @@ function wood_ji(){
   wordout(wood_collect);
   updata("wood",cid[0][0]);
 }//收集木头
+function trap_ji(){
+
+}
 startgame();
 </script>
 </body>
