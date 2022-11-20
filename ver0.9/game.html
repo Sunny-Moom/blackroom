@@ -282,7 +282,7 @@ input:checked+div{
               </tbody>
 			</table>
 			<button class="btn" style="display: none" id="wood_ji" onclick="wood_ji()">收集木头</button>
-			<button class="btn" style="display: none" id="trap_ji">查看陷阱</button>
+			<button class="btn" style="display: none" id="trap_ji" onclick="trap_ji()">查看陷阱</button>
 		</div>
     </label>
     <label>
@@ -299,6 +299,14 @@ input:checked+div{
 </div>
 <script type="text/javascript">
 var cid = [[],[],[],[]];
+function loding(){
+  for(let x=0;x<=3;x++){
+    for(let y=0;y<=14;y++){
+      cid[x][y]=0;
+    }
+  }
+}//数据初始化
+loding();
 var cname=[
         ["wood","meat","bait","coat","tooth","scale","amulet","bacon","leather","iron","coal","sulfur","steel","medicine","alien_alloy"],
         ["cart","cabin","trap","huinter_cabin","meat_factory","leather_factory","iron_mine","coal_mine","sulfur_mine","steel_factory","trade","ordnance_factory"],
@@ -325,17 +333,9 @@ var wood_collect="枯枝败叶把庭园弄得一团糟";//收集木头触发
 var trap_collect=["陷阱里发现了猎物、破碎的牙齿",
 				  "陷阱里发现了猎物、破碎的牙齿和少量的鳞片",
 				  "陷阱里发现了猎物、破碎的牙齿，少量的鳞片和奇怪的护身符"];//陷阱普通事件
-loding();
 var warm=-1;
 var level=0;
 cid[0][0]=5;
-function loding(){
-  for(let x=0;x<=4;x++){
-    for(let y=0;y<=14;y++){
-      cid[x][y]=0;
-    }
-  }
-}//数据初始化
 function lodingdisplay(){
   for(let x=0;x<=2;x++){
     for(let y=0;y<=14;y++){
@@ -362,7 +362,7 @@ function display_tr(a,b){
   if(b==true) document.getElementById(a).style.display='block';
 	else document.getElementById(a).style.display='none';
 }//组件是否显示，a为组件id，b为布尔值(物品栏专用)
-function display_bt(a,b){
+function display_cd(a,b){
   display(a,false);
   setTimeout("display('"+a+"',true)",b*1000);
 }//组件消失后出现，a为组件名，b为消失的时间，单位为秒
@@ -408,7 +408,7 @@ function fire(){
   if(cid[0][0]<1){
     wordout("木头不够了");
   }else{
-    display_bt("fire_bt",5);
+    display_cd("fire_bt",5);
     warm+=1;level+=1;cid[0][0]-=1;
     updata("wood",cid[0][0]);
     wordout(fire_word);
@@ -435,6 +435,9 @@ function trap(){
   if(cid[0][0]<90+20*cid[1][2]){
     wordout("木头不够了");
   }else {
+    if (cid[1][2]==0){
+    display("trap_ji",true);
+    }
     cid[0][0]-=90+20*cid[1][2];
     cid[1][2]+=1;
     if(cid[1][2]>9){
@@ -450,13 +453,46 @@ function wood_ji(){
   if (cid[1][0]==1){
     cid[0][0]+=40;
   }else {cid[0][0]+=15}
-  display_bt("wood_ji",15);
+  display_cd("wood_ji",15);
   wordout(wood_collect);
   updata("wood",cid[0][0]);
 }//收集木头
 function trap_ji(){
-
-}
+  let x=Math.floor(Math.random()*100+1);
+  if(x<50){
+    cid[0][1]+=2*cid[1][2];
+    cid[0][3]+=2*cid[1][2];
+    cid[0][4]+=1*cid[1][2];
+    wordout(trap_collect[0]);
+    updata(cname[0][1],cid[0][1]);
+    updata(cname[0][3],cid[0][3]);
+    updata(cname[0][4],cid[0][4]);
+  }else if(x>=50&&x<90){
+    cid[0][1]+=4*cid[1][2];
+    cid[0][3]+=4*cid[1][2];
+    cid[0][4]+=2*cid[1][2];
+    cid[0][5]+=1*cid[1][2];
+    wordout(trap_collect[1]);
+    updata(cname[0][1],cid[0][1]);
+    updata(cname[0][3],cid[0][3]);
+    updata(cname[0][4],cid[0][4]);
+    updata(cname[0][5],cid[0][5]);
+  }else if(x>=90){
+    cid[0][1]+=6*cid[1][2];
+    cid[0][3]+=6*cid[1][2];
+    cid[0][4]+=3*cid[1][2];
+    cid[0][5]+=2*cid[1][2];
+    cid[0][6]+=1*cid[1][2];
+    wordout(trap_collect[2]);
+    updata(cname[0][1],cid[0][1]);
+    updata(cname[0][3],cid[0][3]);
+    updata(cname[0][4],cid[0][4]);
+    updata(cname[0][5],cid[0][5]);
+    updata(cname[0][6],cid[0][6]);
+  }
+  lodingdisplay();
+  display_cd("trap_ji",20);
+}//采集陷阱
 startgame();
 </script>
 </body>
