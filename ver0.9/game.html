@@ -1,0 +1,369 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/html" lang="">
+<head>
+<meta charset="utf-8">
+<title>The BlackRoom</title>
+<style>
+*{margin: 0;padding: 0;}
+.wrap{
+	margin: 20px auto;
+	width: 603px;
+	height: 800px;
+	border:1px solid #FFFFFF;
+	position: relative;
+}
+.btn{
+  display: none;
+	margin-right: 150px;
+	margin-top: 30px;
+	width: 130px;
+	height: 25px;
+	background-color: #000000;
+	font-size: 15px;
+	text-align: center;
+	color: #FFFFFF;
+	border:1px solid #FFFFFF;
+	cursor: pointer;
+}
+.bag{
+	float: right;
+	margin-right: 60px;
+}
+.textland{
+	width: 601px;
+	height: 170px;
+	position: absolute;
+	border:1px solid #FFFFFF;
+	left: 0;
+	top: 630px;
+	background: #000000;
+}
+.fei{
+  display: none;
+	text-align: right;
+	font-size: 13px;
+}
+textarea{
+	width: 601px;
+	height: 170px;
+	background-color: #000000;
+	color: #FFFFFF;
+}
+body,td,th {
+    color: #FFFFFF;
+}
+body {
+    background-color: #000000;
+}
+label{
+	width: 150px;
+	height: 30px;
+	float: left;
+	text-align: center;
+	line-height:30px;
+	border-right: 1px solid #FFFFFF;
+	border-bottom: 1px solid #FFFFFF;
+}
+label:nth-of-type(4){
+	border-right: none;
+}
+label span{
+	cursor: pointer;
+}
+label div{
+	width: 603px;
+	height: 600px;
+	position: absolute;
+	left: 0;
+	top: 31px;
+	background: #000000;
+	display: none;
+}
+label input{
+	width: 0;
+}
+input:checked+div{
+	display: block;
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+    <label>       
+		<span>小黑屋</span>
+        <input type="radio" name="tab" checked>
+        <div>
+          <table class="bag" border="0">
+              <tbody>
+                <tr>
+                  <th>.</th>
+                  <th>.</th>
+                </tr>
+                <tr id="tr_wood" style="display: none">
+                  <td>木头</td>
+                  <td><output id="wood"></output></td>
+                </tr>
+                <tr id="tr_meat" style="display: none">
+                  <td>肉</td>
+                  <td><output id="meat"></output></td>
+                </tr>
+                <tr id="tr_bait" style="display: none">
+                  <td>诱饵</td>
+                  <td><output id="bait"></output></td>
+                </tr>
+                <tr id="tr_coat" style="display: none">
+                  <td>皮毛</td>
+                  <td><output id="coat"></output></td>
+                </tr>
+                <tr id="tr_tooth" style="display: none">
+                  <td>利齿</td>
+                  <td><output id="tooth"></output></td>
+                </tr>
+                <tr id="tr_scale" style="display: none">
+                  <td>鳞片</td>
+                  <td><output id="scale"></output></td>
+                </tr>
+                <tr id="tr_amulet" style="display: none">
+                  <td>护身符</td>
+                  <td><output id="amulet"></output></td>
+                </tr>
+                <tr id="tr_bacon" style="display: none">
+                  <td>腊肉</td>
+                  <td><output id="bacon"></output></td>
+                </tr>
+                <tr id="tr_leather" style="display: none">
+                  <td>皮革</td>
+                  <td><output id="leather"></output></td>
+                </tr>
+                <tr id="tr_iron" style="display: none">
+                  <td>铁</td>
+                  <td><output id="iron"></output></td>
+                </tr>
+                <tr id="tr_coal" style="display: none">
+                  <td>煤</td>
+                  <td><output id="coal"></output></td>
+                </tr>
+                <tr id="tr_sulfur" style="display: none">
+                  <td>硫磺</td>
+                  <td><output id="sulfur"></output></td>
+                </tr>
+                <tr id="tr_steel" style="display: none">
+                  <td>钢</td>
+                  <td><output id="steel"></output></td>
+                </tr>
+                <tr id="tr_medicine" style="display: none">
+                  <td>药</td>
+                  <td><output id="medicine"></output></td>
+                </tr>
+                <tr id="tr_alien_alloy" style="display: none">
+                  <td>外星合金</td>
+                  <td><output id="alien_alloy"></output></td>
+                </tr>
+                <tr id="tr_compass" style="display: none">
+                  <td>指南针</td>
+                  <td><output id="compass"></output></td>
+                </tr>
+                <tr id="tr_lance" style="display: none">
+                  <td>骨矛</td>
+                  <td><output id="lance"></output></td>
+                </tr>
+                <tr id="tr_iron_sword" style="display: none">
+                  <td>钢剑</td>
+                  <td><output id="iron_sword"></output></td>
+                </tr>
+                <tr id="tr_steel_sword" style="display: none">
+                  <td>钢剑</td>
+                  <td><output id="steel_sword"></output></td>
+                </tr>
+                <tr id="tr_shputgun" style="display: none">
+                  <td>猎枪</td>
+                  <td><output id="shputgun"></output></td>
+                </tr>
+                <tr id="tr_bullet" style="display: none">
+                  <td>子弹</td>
+                  <td><output id="bullet"></output></td>
+                </tr>
+                <tr id="tr_laser_gun" style="display: none">
+                  <td>高能步枪</td>
+                  <td><output id="laser_gun"></output></td>
+                </tr>
+                <tr id="tr_battery" style="display: none">
+                  <td>充能电池</td>
+                  <td><output id="battery"></output></td>
+                </tr>
+                <tr id="tr_dagger" style="display: none">
+                  <td>匕首</td>
+                  <td><output id="dagger"></output></td>
+                </tr>
+                <tr id="tr_decoy_bom" style="display: none">
+                  <td>诱饵弹</td>
+                  <td><output id="decoy_bom"></output></td>
+                </tr>
+                <tr id="tr_frag" style="display: none">
+                  <td>手榴弹</td>
+                  <td><output id="frag"></output></td>
+                </tr>
+              </tbody>
+            </table>
+          <font class="fei" id="fire_ft">&nbsp;1木头&nbsp;</font>
+          <button class="btn" id="fire_bt" onclick="fire()">火堆</button></br>
+          <font class="fei" id="cart_ft">&nbsp;30木头&nbsp;</font>
+          <button class="btn" id="cart_bt" onclick="cart()">小推车</button></br>
+          <font class="fei" id="trap_ft">&nbsp;90木头&nbsp;</font>
+          <button class="btn" id="trap_bt">陷阱</button></br>
+		</div>
+    </label>
+    <label>
+        <span id="page2" style="display: none">屋外</span>
+        <input type="radio" name="tab">
+        <div>
+			<table class="bag" border="0">
+              <tbody>
+				<tr>
+                  <th>.</th>
+                  <th>.</th>
+				</tr>
+                <tr id="tr_cart" style="display: none">
+                  <td>小推车</td>
+                  <td><output id="cart"></output></td>
+                </tr>
+                <tr id="tr_trap" style="display: none">
+                  <td>陷阱</td>
+                  <td><output id="trap"></output></td>
+                </tr>
+              </tbody>
+			</table>
+			<button class="btn" id="wood_ji" onclick="wood_ji()">收集木头</button>
+			<button class="btn" id="trap_ji">查看陷阱</button>
+		</div>
+    </label>
+    <label>
+        <span style="display: none">古代飞船</span>
+        <input type="radio" name="tab">
+        <div>news-page</div>
+    </label>
+    <label>
+        <span style="display: none">外出</span>
+        <input type="radio" name="tab">
+        <div>mine-page</div>
+    </label>
+	<div class="textland"><textarea name="words" id="words" readonly></textarea></div>
+</div>
+<script type="text/javascript">
+var cid = [[],[],[],[]];
+var fire_word="熊熊燃烧着的 火堆";//火堆触发剧情
+var warm_word=["寒冷的 小屋",
+			   "有了温度的 小屋",
+			   "温度刚好的 小屋",
+			   "温暖的 小屋",
+			   "热的 小屋"];//小屋温度剧情
+var words=["风雨交加的 夜晚",
+		   "漆黑的 小屋",
+		   "一个陌生人跌跌撞撞冲进了小屋",
+		   "陌生人浑身湿透蜷缩在地上 瑟瑟发抖并满口不知所云",
+		   "陌生人不再发抖 神色逐渐缓和",
+		   "陌生人神志逐渐清醒 开始打量四周",
+		   "陌生人表示自己是工匠 能够制造一些简单的东西",
+		   "工匠希望能够定居下来 她可以帮忙做一些力所能及的事",
+		   "工匠制作了一个小推车 这样可以收集更多的木头"];//起始剧情
+var trap_word="更多的陷阱可以捕捉更多的猎物";//制作陷阱触发
+var wood_collect="枯枝败叶把庭园弄得一团糟";//收集木头触发
+var trap_collect=["陷阱里发现了猎物、破碎的牙齿",
+				  "陷阱里发现了猎物、破碎的牙齿和少量的鳞片",
+				  "陷阱里发现了猎物、破碎的牙齿，少量的鳞片和奇怪的护身符"];//陷阱普通事件
+var warm=-1;
+var level=0;
+cid[0][0]=5;
+function updata(a,b){
+  document.getElementById(a).innerHTML=b;
+}//a为组件id，b为物品数量
+function textgb(){
+      var gb=document.getElementById("words");
+      gb.scrollTop=gb.scrollHeight;
+    }//文本置低
+function display(a,b){
+  if(b==true) document.getElementById(a).style.display='inline';
+	else document.getElementById(a).style.display='none';
+}//组件是否显示，a为组件id，b为布尔值
+function display_bt(a,b){
+  display(a,false);
+  setTimeout("display('"+a+"',true)",b*1000);
+}//组件消失后出现，a为组件名，b为消失的时间，单位为秒
+function wordout(a){
+	document.getElementById("words").value+='\n'+a;
+	textgb();
+}//a为输出的剧情
+function startgame(){
+	if(level==0){
+		setTimeout("wordout('"+words[0]+"')",2000);
+		setTimeout("wordout('"+words[1]+"')",4000);
+		setTimeout("wordout('"+words[2]+"')",6000);
+      setTimeout("display('tr_wood',true)",6000);
+      setTimeout("updata('wood',cid[0][0])",6000);
+      setTimeout("display('fire_bt',true)",6000);
+      setTimeout("display('fire_ft',true)",6000);
+		level+=1;
+	}else if(level==3){
+      setTimeout(warmjq(),2000);
+      setTimeout("wordout('"+words[3]+"')",4000);
+      level+=1;
+    }else if(level==5){
+      setTimeout(warmjq(),2000);
+      setTimeout("wordout('"+words[4]+"')",4000);
+      level+=1;
+    }else if(level==7){
+      setTimeout(warmjq(),2000);
+      setTimeout("wordout('"+words[5]+"')",4000);
+      level+=1;
+    }else if(level==9){
+      setTimeout(warmjq(),2000);
+      setTimeout("wordout('"+words[6]+"')",4000);
+      setTimeout("display('cart_ft',true)",5000);
+      setTimeout("display('cart_bt',true)",5000);
+      setTimeout("wordout('"+words[7]+"')",7000);
+      setTimeout("display('page2',true)",8000);
+      setTimeout("display('wood_ji',true)",8000);
+      level+=1;
+    } else {setTimeout(warmjq(),2000);}
+}//游戏初始剧情
+function warmjq(){	
+		setTimeout("wordout('"+warm_word[warm]+"')",2000);	
+}//温度输出剧情
+function fire(){
+  if(cid[0][0]<1){
+    wordout("木头不够了");
+  }else{
+    display_bt("fire_bt",5);
+    display_bt("fire_ft",5);
+    warm+=1;level+=1;cid[0][0]-=1;
+    updata("wood",cid[0][0]);
+    wordout(fire_word);
+    startgame();
+    if(warm==4){warm=2;}
+  }
+}//点燃火堆
+function cart(){
+  if(cid[0][0]<30){wordout("木头不够了");}else {
+    cid[0][0]-=30;
+    display("cart_ft",false);
+    display("cart_bt",false);
+    display("tr_trap",true);
+    cid[1][0]=1;
+    wordout(words[8]);
+    updata("trap",cid[0][0]);
+    updata("wood",cid[0][0]);
+  }
+}//购买小推车
+function wood_ji(){
+  if (cid[1][0]==1){
+    cid[0][0]+=40;
+  }else {cid[0][0]+=15}
+  display_bt("wood_ji",15);
+  wordout(wood_collect);
+  updata("wood",cid[0][0]);
+}//收集木头
+startgame();
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+
+<h1>JavaScript 函数</h1>
+
+<button id="fire" onClick="on_fire()" style="display:inline">火堆</button>
+<p id="ff">熄灭</p>
+
+<script>
+
+function on_fire(){
+wdisplay("fire",false);
+document.getElementById("ff").innerHTML = "燃烧";
+setTimeout(wf, 3000);
+}
+function wf(){
+		wdisplay("fire",true);
+		document.getElementById("ff").innerHTML = "熄灭";
+	}
+function wdisplay(a,b){
+	if(b==true){document.getElementById(a).style.display='inline';}
+	else{document.getElementById(a).style.display='none';}
+}//a为组件id，b为布尔值
+</script>
+
+</body>
+</html>
+
