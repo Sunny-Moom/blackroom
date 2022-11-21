@@ -1,5 +1,5 @@
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/html" lang="">
+<html xmlns="http://www.w3.org/1999/html" lang="en">
 <head>
 <meta charset="utf-8">
 <title>The BlackRoom</title>
@@ -315,19 +315,19 @@ function loding(){
   }
 }//数据初始化
 loding();
-var cname=[
+const cname=[
         ["wood","meat","bait","coat","tooth","scale","amulet","bacon","leather","iron","coal","sulfur","steel","medicine","alien_alloy"],
         ["cart","cabin","trap","huinter_cabin","meat_factory","leather_factory","iron_mine","coal_mine","sulfur_mine","steel_factory","trade","ordnance_factory"],
         ["compass","lance","iron_sword","steel_sword","shputgun","bullet","laser_gun","battery","dagger","decoy_bomb","frag"],
         ["leather_armour","iron_armour","steel_armour","knapsack","water_bag","iron_box","kettle","wagon","water_box"]
 ];
-var fire_word="熊熊燃烧着的 火堆";//火堆触发剧情
-var warm_word=["寒冷的 小屋",
+const fire_word="熊熊燃烧着的 火堆";//火堆触发剧情
+const warm_word=["寒冷的 小屋",
 			   "有了温度的 小屋",
 			   "温度刚好的 小屋",
 			   "温暖的 小屋",
 			   "热的 小屋"];//小屋温度剧情
-var words=["风雨交加的 夜晚",
+const words=["风雨交加的 夜晚",
 		   "漆黑的 小屋",
 		   "一个陌生人跌跌撞撞冲进了小屋",
 		   "陌生人浑身湿透蜷缩在地上 瑟瑟发抖并满口不知所云",
@@ -336,12 +336,12 @@ var words=["风雨交加的 夜晚",
 		   "陌生人表示自己是工匠 能够制造一些简单的东西",
 		   "工匠希望能够定居下来 她可以帮忙做一些力所能及的事",
 		   "工匠制作了一个小推车 这样可以收集更多的木头"];//起始剧情
-var trap_word="更多的陷阱可以捕捉更多的猎物";//制作陷阱触发
-var wood_collect="枯枝败叶把庭园弄得一团糟";//收集木头触发
-var trap_collect=["陷阱里发现了猎物、破碎的牙齿",
+const trap_word="更多的陷阱可以捕捉更多的猎物";//制作陷阱触发
+const wood_collect="枯枝败叶把庭园弄得一团糟";//收集木头触发
+const trap_collect=["陷阱里发现了猎物、破碎的牙齿",
 				  "陷阱里发现了猎物、破碎的牙齿和少量的鳞片",
 				  "陷阱里发现了猎物、破碎的牙齿，少量的鳞片和奇怪的护身符"];//陷阱普通事件
-var hunman_word=["一位拾荒者在夜色中到来",
+const hunman_word=["一位拾荒者在夜色中到来",
                  "一个饱经风霜的家庭住进了一个屋子",
                  "一群人聚集了起来 个个饥肠辘辘"]//增员剧情
 var warm=-1;
@@ -393,20 +393,19 @@ function woodadd(){
 function hunman_add(){
   let y=cid[1][1]*4-wood_p+3;
   let x=0;
-  if (y<1){x=0;}
-  else if (1<=y<4){x=Math.floor(Math.random()*39+1);}
-  else if (4<=y<6){x=Math.floor(Math.random()*79+1);}
+  if (y>=1&&y<4){x=Math.floor(Math.random()*39+1);}
+  else if (y>=4&&y<6){x=Math.floor(Math.random()*79+1);}
   else if (y>=6){x=Math.floor(Math.random()*100+1);}
-  if (0<x<40){
+  if (x>0&&x<40){
     wood_p+=1;
     wordout(hunman_word[0]);
-  }else if (40<=x<80){
+  }else if (x>=40&&x<80){
     wood_p+=4;
     wordout(hunman_word[1]);
-  } else if (80<=x<100){
+  } else if (x>=80&&x<100){
     wood_p+=6;
     wordout(hunman_word[2]);
-  }else {x=0}
+  }
 }//人员增加
 function startgame(){
 	if(level==0){
