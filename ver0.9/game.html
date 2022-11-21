@@ -341,7 +341,11 @@ var wood_collect="枯枝败叶把庭园弄得一团糟";//收集木头触发
 var trap_collect=["陷阱里发现了猎物、破碎的牙齿",
 				  "陷阱里发现了猎物、破碎的牙齿和少量的鳞片",
 				  "陷阱里发现了猎物、破碎的牙齿，少量的鳞片和奇怪的护身符"];//陷阱普通事件
+var hunman_word=["一位拾荒者在夜色中到来",
+                 "一个饱经风霜的家庭住进了一个屋子",
+                 "一群人聚集了起来 个个饥肠辘辘"]//增员剧情
 var warm=-1;
+var wood_p=3;//伐木工数量
 var level=0;
 cid[0][0]=5;
 function lodingdisplay(){
@@ -378,6 +382,32 @@ function wordout(a){
 	document.getElementById("words").value+='\n'+a;
 	textgb();
 }//a为输出的剧情
+function gameadd(x,y,a){
+  cid[x][y]+=a;
+  updata(cname[x][y],cid[x][y]);
+}//物资增减，xy为cid，a为增加的数
+function woodadd(){
+  gameadd(0,0,wood_p);
+  setTimeout(woodadd,5000);
+}//木头自增
+function hunman_add(){
+  let y=cid[1][1]*4-wood_p+3;
+  let x=0;
+  if (y<1){x=0;}
+  else if (1<=y<4){x=Math.floor(Math.random()*39+1);}
+  else if (4<=y<6){x=Math.floor(Math.random()*79+1);}
+  else if (y>=6){x=Math.floor(Math.random()*100+1);}
+  if (0<x<40){
+    wood_p+=1;
+    wordout(hunman_word[0]);
+  }else if (40<=x<80){
+    wood_p+=4;
+    wordout(hunman_word[1]);
+  } else if (80<=x<100){
+    wood_p+=6;
+    wordout(hunman_word[2]);
+  }else {x=0}
+}//人员增加
 function startgame(){
 	if(level==0){
 		setTimeout("wordout('"+words[0]+"')",2000);
@@ -406,6 +436,7 @@ function startgame(){
       setTimeout("wordout('"+words[7]+"')",7000);
       setTimeout("display('page2',true)",8000);
       setTimeout("display('wood_ji',true)",8000);
+      setTimeout(woodadd,8000);
       level+=1;
     } else {setTimeout(warmjq(),2000);}
 }//游戏初始剧情
@@ -421,7 +452,13 @@ function fire(){
     updata("wood",cid[0][0]);
     wordout(fire_word);
     startgame();
-    if(warm==4){warm=2;}
+    if(warm==4){
+      warm=2;
+      let a=Math.floor(Math.random()*100+1);
+      if(a<=50){
+        setTimeout(hunman_add,4000);
+      }else {a==0;}
+    }
   }
 }//点燃火堆
 function cart(){
@@ -515,7 +552,7 @@ function cabin(){
       wordout("剩下的空间不足以建造更多的木屋了");
       display("cabin_bt",false);
     }else {
-      wordout("工匠建起了一座小屋 他说这件事很快就会传出去");
+      wordout("工匠建起了一座小屋 她说这件事很快就会传出去");
     }
     updata("cabin_ft",100+30*cid[1][1]+"木头&nbsp;")
     updata("cabin",cid[1][1]);
